@@ -1,0 +1,15 @@
+{
+  "name": "notations",
+  "productName": "Notations",
+  "version": "0.1.0",
+  "description": "Notations desktop MVP",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NOTATIONS_DEV_WATCH=1 electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.2.6"
+  }
+}

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notations</title>
+    <link rel="stylesheet" href="../../fonts.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section id="loginView" class="view">
+        <div class="login-center">
+          <button class="dot-icon block" id="loginLogo" aria-label="Notations"></button>
+          <h1 class="brand">Notations.</h1>
+          <div class="login-form">
+            <input id="usernameInput" class="gate-input" type="text" placeholder="username or email" />
+            <input id="passwordInput" class="gate-input" type="password" placeholder="password" />
+            <button id="loginEnter" class="enter-button">enter</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="libraryView" class="view hidden">
+        <header class="topbar">
+          <button class="dot-icon tiny home-trigger" aria-label="Home"></button>
+          <nav class="breadcrumb-bar" id="libraryBreadcrumb" aria-label="Library breadcrumb"></nav>
+          <button class="dot-row settings-trigger" aria-label="Settings"></button>
+        </header>
+
+        <main class="library-main">
+          <div id="libraryGrid" class="library-grid"></div>
+        </main>
+      </section>
+
+      <section id="editorView" class="view hidden">
+        <header class="topbar">
+          <button class="dot-icon tiny home-trigger" aria-label="Home"></button>
+          <div class="breadcrumb-bar breadcrumb-editor" id="editorBreadcrumb">
+            <div class="breadcrumb-trail" id="editorBreadcrumbTrail"></div>
+            <span class="breadcrumb-segment breadcrumb-current">
+              <input id="sheetTitle" class="title-input" type="text" />
+            </span>
+            <span id="sheetSubtitle" class="title-subtitle"></span>
+          </div>
+          <div class="topbar-actions">
+            <select id="quickFontFamily" class="quick-select">
+              <option value="sans">Sans Serif</option>
+              <option value="monospace">Monospace</option>
+              <option value="serif">Serif</option>
+            </select>
+            <select id="quickFontSize" class="quick-size"></select>
+            <button class="dot-row settings-trigger" aria-label="Settings"></button>
+          </div>
+        </header>
+
+        <main class="editor-main">
+          <div class="editor-toolbar">
+            <div class="editor-buttons">
+              <button id="printBtn" class="pill-btn">Print</button>
+              <button id="pdfBtn" class="pill-btn">PDF</button>
+              <button id="txtBtn" class="pill-btn">TXT</button>
+            </div>
+          </div>
+
+          <div id="editorPages" class="editor-pages">
+            <div id="pageFrames" class="page-frames"></div>
+            <textarea id="sheetBody" class="sheet-body" spellcheck="false"></textarea>
+          </div>
+
+          <aside id="editorSide" class="editor-side">
+            <div id="tagsPanel" class="tags-panel">
+              <div class="chips chips-vertical" id="tagChips"></div>
+            </div>
+            <div class="editor-meta" id="editorMeta"></div>
+          </aside>
+        </main>
+      </section>
+
+      <aside id="settingsPanel" class="settings-panel hidden">
+        <h2>Settings</h2>
+
+        <label class="field">
+          <span>Paper</span>
+          <select id="paperSizeSelect">
+            <option value="letter">US Letter</option>
+            <option value="a4">A4</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Font Family</span>
+          <select id="fontFamilySelect">
+            <option value="sans">Sans Serif</option>
+            <option value="monospace">Monospace</option>
+            <option value="serif">Serif</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Font Size</span>
+          <select id="fontSizeInput"></select>
+        </label>
+
+        <div class="margin-grid">
+          <label class="field">
+            <span>Top Margin (in)</span>
+            <input id="marginTopInput" type="number" min="0" step="0.05" />
+          </label>
+          <label class="field">
+            <span>Right Margin (in)</span>
+            <input id="marginRightInput" type="number" min="0" step="0.05" />
+          </label>
+          <label class="field">
+            <span>Bottom Margin (in)</span>
+            <input id="marginBottomInput" type="number" min="0" step="0.05" />
+          </label>
+          <label class="field">
+            <span>Left Margin (in)</span>
+            <input id="marginLeftInput" type="number" min="0" step="0.05" />
+          </label>
+        </div>
+
+        <button id="resetDefaults" class="reset-btn">Reset Defaults</button>
+      </aside>
+
+      <div id="choiceDialog" class="choice-dialog hidden" aria-hidden="true">
+        <div id="choiceDialogScrim" class="choice-dialog-scrim"></div>
+        <div
+          class="choice-dialog-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="choiceDialogTitle"
+          aria-describedby="choiceDialogMessage"
+        >
+          <h2 id="choiceDialogTitle" class="choice-dialog-title"></h2>
+          <p id="choiceDialogMessage" class="choice-dialog-message"></p>
+          <div id="choiceDialogActions" class="choice-dialog-actions"></div>
+        </div>
+      </div>
+
+      <div id="commandPalette" class="command-palette hidden" aria-hidden="true">
+        <div id="commandPaletteScrim" class="command-palette-scrim"></div>
+        <div class="command-palette-panel" role="dialog" aria-modal="true" aria-labelledby="commandPaletteLabel">
+          <div class="command-palette-input-wrap">
+            <span id="commandPaletteLabel" class="command-palette-slash">/</span>
+            <input
+              id="commandPaletteInput"
+              class="command-palette-input"
+              type="text"
+              placeholder="Type a command"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <div id="commandPaletteSubtitle" class="command-palette-subtitle"></div>
+          <ul id="commandPaletteList" class="command-palette-list" role="listbox"></ul>
+          <div id="commandPaletteEmpty" class="command-palette-empty hidden">No matching commands</div>
+        </div>
+      </div>
+
+      <div id="toastRoot" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <section id="printRoot" aria-hidden="true">
+      <pre id="printDocument"></pre>
+    </section>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
