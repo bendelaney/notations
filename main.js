@@ -3,18 +3,17 @@ const fsNative = require('fs');
 const fs = require('fs/promises');
 const path = require('path');
 
-const WINDOW_MIN_WIDTH = 1200;
-const WINDOW_MIN_HEIGHT = 760;
 const DEV_WATCH = process.env.NOTATIONS_DEV_WATCH === '1';
 const PROCESS_RESTART_FILES = new Set(['main.js', 'preload.js']);
 const STATE_FILENAME = 'notations-state.json';
 const IS_MAC = process.platform === 'darwin';
 const DEEP_LINK_PROTOCOL = 'notations';
+const APP_NAME = 'Notations';
 const ICONS_DIR = path.join(__dirname, 'assets', 'icons');
-const APP_ICON_PATH = path.join(ICONS_DIR, 'Icon-iOS-Default-1024x1024@1x.png');
+const APP_ICON_PATH = path.join(ICONS_DIR, 'icon.png');
 
-app.setName('Notations');
-process.title = 'Notations';
+app.setName(APP_NAME);
+process.title = APP_NAME;
 
 let pendingDeepLinkPath = null;
 let mainWindow = null;
@@ -97,6 +96,19 @@ function applyAppIcon() {
   if (!icon.isEmpty()) {
     app.dock.setIcon(icon);
   }
+}
+
+function applyAboutPanelOptions() {
+  if (!IS_MAC) return;
+  const options = {
+    applicationName: APP_NAME,
+    applicationVersion: app.getVersion(),
+    version: app.getVersion()
+  };
+  if (fsNative.existsSync(APP_ICON_PATH)) {
+    options.iconPath = APP_ICON_PATH;
+  }
+  app.setAboutPanelOptions(options);
 }
 
 function setupRendererWatch(win) {
@@ -186,12 +198,10 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1440,
     height: 960,
-    minWidth: WINDOW_MIN_WIDTH,
-    minHeight: WINDOW_MIN_HEIGHT,
     backgroundColor: '#ffffff',
     icon: APP_ICON_PATH,
     show: false,
-    title: 'Notations',
+    title: APP_NAME,
     titleBarStyle: IS_MAC ? 'hidden' : 'default',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -245,9 +255,12 @@ function createApplicationMenu() {
     ...(IS_MAC
       ? [
           {
-            label: app.name,
+            label: APP_NAME,
             submenu: [
-              { role: 'about' },
+              {
+                label: `About ${APP_NAME}`,
+                click: () => app.showAboutPanel()
+              },
               { type: 'separator' },
               { role: 'services' },
               { type: 'separator' },
@@ -340,6 +353,7 @@ app.on('open-url', (event, urlString) => {
 app.whenReady().then(() => {
   const stopProcessWatch = setupProcessRelaunchWatch();
   app.on('will-quit', stopProcessWatch);
+  applyAboutPanelOptions();
   createApplicationMenu();
   registerDeepLinkProtocol();
   applyAppIcon();

@@ -138,7 +138,7 @@ textarea {
 .dot-icon {
   width: 42px;
   height: 42px;
-  background: center / contain no-repeat url("../../assets/icons/icon2.svg");
+  background: center / contain no-repeat url("../../assets/icons/icon.svg");
   mix-blend-mode: multiply;
 }
 
@@ -178,16 +178,12 @@ textarea {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
-  /* padding: var(--mac-traffic-top) 20px 0 calc(8px + var(--mac-traffic-left)); */
-  padding: calc(8px + var(--mac-traffic-top)) 20px 0 30px;
+  padding: var(--mac-traffic-top) 20px 0 30px;
   background: var(--app-bg);
   -webkit-app-region: drag;
 }
 
-#editorView .topbar {
-  height: 78px;
-  padding: var(--mac-traffic-top) 20px 0 30px;
-}
+#editorView .topbar {}
 
 .topbar button,
 .topbar input,
@@ -196,9 +192,7 @@ textarea {
   -webkit-app-region: no-drag;
 }
 
-#libraryView.library-stack .topbar {
-  /* border-bottom: 1px solid var(--accent); */
-}
+#libraryView .settings-trigger {display:none;}
 
 .breadcrumb-bar {
   display: inline-flex;

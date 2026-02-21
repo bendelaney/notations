@@ -1,2 +1,4 @@
 node_modules/
 .DS_Store
+release/
+Notations-darwin-arm64/
